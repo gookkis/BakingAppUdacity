@@ -1,0 +1,11 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.gookkis.bakingapp.widget.BakingWidgetConfigurationActivity"
+    android:initialLayout="@layout/fragment_recipe"
+    android:minHeight="100dp"
+    android:minResizeHeight="100dip"
+    android:minResizeWidth="100dip"
+    android:minWidth="100dp"
+    android:previewImage="@mipmap/ic_launcher"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="86400000"
+    android:widgetCategory="home_screen" />

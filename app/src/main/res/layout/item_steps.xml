@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_thumb"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/placeholder" />
+
+
+        <TextView
+            android:id="@+id/tv_short_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/act_margin"
+            android:layout_toRightOf="@+id/img_thumb" />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
