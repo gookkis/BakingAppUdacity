@@ -76,32 +76,16 @@ public class Recipe implements Parcelable {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
     public ArrayList<Step> getSteps() {
         return steps;
-    }
-
-    public void setSteps(ArrayList<Step> steps) {
-        this.steps = steps;
     }
 
     public Integer getServings() {
         return servings;
     }
 
-    public void setServings(Integer servings) {
-        this.servings = servings;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     @Override

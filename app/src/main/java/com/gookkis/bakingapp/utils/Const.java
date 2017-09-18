@@ -8,5 +8,8 @@ public class Const {
     public static final String ISMULTIPANE = "ISMULTIPANE";
     public static final String STEPS_POSITION = "STEPS_POSITION";
     public static final String SELECTED_RECIPE = "SELECTED_RECIPE";
+    public static final String VIDEO_URL = "VIDEO_URL";
+    public static final String DESCRIPTION = "DESCRIPTION";
+
 
 }

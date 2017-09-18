@@ -19,9 +19,9 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 import com.gookkis.bakingapp.R;
 import com.gookkis.bakingapp.model.Step;
+import com.gookkis.bakingapp.utils.Const;
 
 import java.util.List;
 
@@ -48,17 +48,14 @@ public class StepsDescItemFragment extends Fragment {
     private String videoURL;
     private String description;
 
-    private static final String VIDEO_URL = "ipaddr.mobile.ipaddr.id.bakingapps.ui.StepsDescItemFragment.VIDEO_URL";
-    private static final String DESCRIPTION = "ipaddr.mobile.ipaddr.id.bakingapps.ui.StepsDescItemFragment.DESCRIPTION";
-
     public StepsDescItemFragment() {
     }
 
     public static StepsDescItemFragment newInstance(String videoURL, String description) {
         StepsDescItemFragment f = new StepsDescItemFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(VIDEO_URL, videoURL);
-        bundle.putString(DESCRIPTION, description);
+        bundle.putString(Const.VIDEO_URL, videoURL);
+        bundle.putString(Const.DESCRIPTION, description);
         f.setArguments(bundle);
         return f;
     }
@@ -74,10 +71,10 @@ public class StepsDescItemFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null && getArguments().containsKey(VIDEO_URL) && getArguments().containsKey(DESCRIPTION)) {
+        if (getArguments() != null && getArguments().containsKey(Const.VIDEO_URL) && getArguments().containsKey(Const.DESCRIPTION)) {
             Bundle bundle = getArguments();
-            videoURL = bundle.getString(VIDEO_URL);
-            description = bundle.getString(DESCRIPTION);
+            videoURL = bundle.getString(Const.VIDEO_URL);
+            description = bundle.getString(Const.DESCRIPTION);
         }
     }
 
@@ -102,37 +99,30 @@ public class StepsDescItemFragment extends Fragment {
     public void onStart() {
         super.onStart();
         hideSystemUI();
-        if (Util.SDK_INT > 23) {
-            iniPlayer();
-        }
+        initOrResumePlayer();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         hideSystemUI();
-        if (Util.SDK_INT <= 23 || simpleExoPlayer == null) {
-            iniPlayer();
-        }
+        initOrResumePlayer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT <= 23) {
-            releasePlayer();
-        }
+        releasePlayer();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
+        releasePlayer();
+
     }
 
-    private void iniPlayer() {
+    private void initOrResumePlayer() {
         if (videoURL == null) return;
         simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity())
                 , new DefaultTrackSelector(), new DefaultLoadControl());

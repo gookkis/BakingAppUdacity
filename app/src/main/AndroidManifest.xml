@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".core.recipe.RecipeActivity" />
+        <activity android:name=".core.recipe.StepDescItemActivity" />
         <activity android:name=".widget.BakingWidgetConfigurationActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>

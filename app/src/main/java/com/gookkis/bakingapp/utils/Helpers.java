@@ -2,33 +2,43 @@ package com.gookkis.bakingapp.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.WindowManager;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 /**
  * Created by herikiswanto on 6/21/17.
  */
 
 public class Helpers {
-    public static int getWidthPoster(Activity activity) {
+    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
+            throws Throwable {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever mediaMetadataRetriever = null;
+        try {
+            mediaMetadataRetriever = new MediaMetadataRetriever();
+            if (Build.VERSION.SDK_INT >= 14)
+                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
+            else
+                mediaMetadataRetriever.setDataSource(videoPath);
+            //   mediaMetadataRetriever.setDataSource(videoPath);
+            bitmap = mediaMetadataRetriever.getFrameAtTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Throwable(
+                    "Exception in retriveVideoFrameFromVideo(String videoPath)"
+                            + e.getMessage());
 
-        int widthPoster = 0;
-
-        Point size = new Point();
-        WindowManager w = activity.getWindowManager();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            w.getDefaultDisplay().getSize(size);
-            widthPoster = size.x / calculateNoOfColumns(activity);
-        } else {
-            Display d = w.getDefaultDisplay();
-            widthPoster = d.getWidth() / calculateNoOfColumns(activity);
+        } finally {
+            if (mediaMetadataRetriever != null) {
+                mediaMetadataRetriever.release();
+            }
         }
-        return widthPoster;
+        return bitmap;
     }
 
     public static int calculateNoOfColumns(Context context) {

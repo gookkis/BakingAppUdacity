@@ -42,7 +42,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Recipe recipe = data.get(position);
         holder.click(recipe, listener);
         holder.tvName.setText(recipe.getName());
-        holder.tvServings.setText(recipe.getServings() +" "+ context.getString(R.string.servings));
+        holder.tvServings.setText(recipe.getServings() + " " + context.getString(R.string.servings));
 
         if (!recipe.getImage().isEmpty()) {
             Picasso.with(context)
@@ -50,7 +50,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.place_error)
                     .into(holder.background);
-        }else{
+        } else if (!recipe.getSteps().get(0).getThumbnailURL().isEmpty()) {
+            Picasso.with(context)
+                    .load(recipe.getSteps().get(0).getThumbnailURL())
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.place_error)
+                    .into(holder.background);
+        } else {
             Picasso.with(context)
                     .load(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder)

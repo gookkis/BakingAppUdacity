@@ -1,6 +1,7 @@
 package com.gookkis.bakingapp.core.recipe;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.GsonBuilder;
 import com.gookkis.bakingapp.R;
 import com.gookkis.bakingapp.model.Step;
+import com.gookkis.bakingapp.utils.Const;
 import com.gookkis.bakingapp.utils.StepsPosition;
 import com.squareup.picasso.Picasso;
 
@@ -19,7 +22,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 /**
  * Created by herikiswanto on 8/22/17.
@@ -73,11 +75,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
                 if (isMultiPane) {
                     EventBus.getDefault().post(new StepsPosition(position));
                 } else {
-                    /*Intent intent = new Intent(context, StepDetailActivity.class);
+                    Intent intent = new Intent(context, StepDescItemActivity.class);
                     String jsonSteps = new GsonBuilder().create().toJson(data);
                     intent.putExtra(Const.STEPS, jsonSteps);
-                    context.startActivity(intent);*/
-                    Timber.d("Step Adapter ke Detail Activity Player");
+                    context.startActivity(intent);
+
                 }
             }
         });
