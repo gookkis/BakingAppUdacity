@@ -113,6 +113,14 @@ public class StepsDescItemFragment extends Fragment {
     public void onPause() {
         super.onPause();
         releasePlayer();
+        pauseVideo();
+    }
+
+    private void pauseVideo() {
+        if (simpleExoPlayer != null) {
+            playBackPosition = simpleExoPlayer.getCurrentPosition();
+        }
+        releasePlayer();
     }
 
     @Override
