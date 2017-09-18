@@ -78,8 +78,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
                     Intent intent = new Intent(context, StepDescItemActivity.class);
                     String jsonSteps = new GsonBuilder().create().toJson(data);
                     intent.putExtra(Const.STEPS, jsonSteps);
+                    intent.putExtra(Const.STEPS_POSITION, position);
                     context.startActivity(intent);
-
                 }
             }
         });

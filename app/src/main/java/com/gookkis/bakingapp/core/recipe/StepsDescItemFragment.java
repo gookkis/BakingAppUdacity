@@ -19,11 +19,9 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.gookkis.bakingapp.R;
-import com.gookkis.bakingapp.model.Step;
 import com.gookkis.bakingapp.utils.Const;
-
-import java.util.List;
 
 
 /**
@@ -31,22 +29,21 @@ import java.util.List;
  */
 public class StepsDescItemFragment extends Fragment {
 
-    private SimpleExoPlayerView mPlayerView;
-    private TextView tvDescirption;
-    private SimpleExoPlayer simpleExoPlayer;
+    public SimpleExoPlayerView mPlayerView;
+    public TextView tvDescirption;
+    public SimpleExoPlayer simpleExoPlayer;
 
-    private static final String PLAYWHENREADY = "PLAYWHENREADY";
-    private boolean playWhenReady = true;
+    public static final String PLAYWHENREADY = "PLAYWHENREADY";
+    public boolean playWhenReady = true;
 
-    private static final String CURRENTWINDOW = "CURRENTWINDOW";
-    private int currentWindow;
+    public static final String CURRENTWINDOW = "CURRENTWINDOW";
+    public int currentWindow;
 
-    private static final String PLAYBACKPOSITION = "PLAYBACKPOSITION";
-    private long playBackPosition;
+    public static final String PLAYBACKPOSITION = "PLAYBACKPOSITION";
+    public long playBackPosition;
 
-    private List<Step> steps;
-    private String videoURL;
-    private String description;
+    public String videoURL;
+    public String description;
 
     public StepsDescItemFragment() {
     }
@@ -95,40 +92,41 @@ public class StepsDescItemFragment extends Fragment {
         return rootView;
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
         hideSystemUI();
-        initOrResumePlayer();
+        if (Util.SDK_INT > 23) {
+            initOrResumePlayer();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         hideSystemUI();
-        initOrResumePlayer();
+        if (Util.SDK_INT <= 23 || simpleExoPlayer == null) {
+            initOrResumePlayer();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        releasePlayer();
-        pauseVideo();
-    }
-
-    private void pauseVideo() {
-        if (simpleExoPlayer != null) {
-            playBackPosition = simpleExoPlayer.getCurrentPosition();
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
         }
-        releasePlayer();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        releasePlayer();
-
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+        }
     }
+
 
     private void initOrResumePlayer() {
         if (videoURL == null) return;
@@ -149,7 +147,7 @@ public class StepsDescItemFragment extends Fragment {
                 , new DefaultExtractorsFactory(), null, null);
     }
 
-    private void releasePlayer() {
+    public void releasePlayer() {
         if (simpleExoPlayer != null) {
             playWhenReady = simpleExoPlayer.getPlayWhenReady();
             currentWindow = simpleExoPlayer.getCurrentWindowIndex();
@@ -167,4 +165,6 @@ public class StepsDescItemFragment extends Fragment {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
+
+
 }

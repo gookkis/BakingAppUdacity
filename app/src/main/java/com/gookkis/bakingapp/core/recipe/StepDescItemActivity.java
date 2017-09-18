@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gookkis.bakingapp.R;
 import com.gookkis.bakingapp.model.Step;
+import com.gookkis.bakingapp.utils.Const;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class StepDescItemActivity extends AppCompatActivity {
     private StepsDetailPagerAdapter adapter;
 
     private ArrayList<Step> steps = new ArrayList<>();
+    private int stepPosition = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class StepDescItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(STEPS)) {
             String ssteps = intent.getStringExtra(STEPS);
+            stepPosition = intent.getIntExtra(Const.STEPS_POSITION, 0);
             Type type = new TypeToken<ArrayList<Step>>() {
             }.getType();
             steps.clear();
@@ -41,5 +44,6 @@ public class StepDescItemActivity extends AppCompatActivity {
 
         adapter = new StepsDetailPagerAdapter(getSupportFragmentManager(), this, steps);
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(stepPosition);
     }
 }
