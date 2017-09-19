@@ -1,4 +1,4 @@
-package com.gookkis.bakingapp.core.recipe;
+package com.gookkis.bakingapp.core.steps;
 
 import android.content.Context;
 import android.content.Intent;
@@ -83,6 +83,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
                 }
             }
         });
+
+        if(!step.getVideoURL().isEmpty()){
+            holder.imgVid.setImageResource(R.drawable.ic_slow_motion_video_blue_500_48dp);
+        }
     }
 
 
@@ -101,6 +105,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         TextView tvShortDesc;
         @BindView(R.id.img_thumb)
         ImageView imgThumb;
+        @BindView(R.id.img_vid)
+        ImageView imgVid;
 
         public ViewHolder(View itemView) {
             super(itemView);

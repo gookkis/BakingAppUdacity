@@ -1,4 +1,4 @@
-package com.gookkis.bakingapp.core.recipe;
+package com.gookkis.bakingapp.core.steps;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -43,4 +43,6 @@ public class StepsDetailPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return steps.size();
     }
+
+
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.gookkis.bakingapp.R;
+import com.gookkis.bakingapp.core.steps.StepsAdapter;
 import com.gookkis.bakingapp.model.Recipe;
 import com.gookkis.bakingapp.model.Step;
 

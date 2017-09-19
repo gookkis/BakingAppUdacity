@@ -1,4 +1,4 @@
-package com.gookkis.bakingapp.core.recipe;
+package com.gookkis.bakingapp.core.steps;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +43,9 @@ public class StepDescItemActivity extends AppCompatActivity {
         }
 
         adapter = new StepsDetailPagerAdapter(getSupportFragmentManager(), this, steps);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(stepPosition);
+
     }
 }

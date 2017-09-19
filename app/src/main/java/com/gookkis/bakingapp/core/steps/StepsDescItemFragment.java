@@ -1,4 +1,4 @@
-package com.gookkis.bakingapp.core.recipe;
+package com.gookkis.bakingapp.core.steps;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -126,7 +126,6 @@ public class StepsDescItemFragment extends Fragment {
             releasePlayer();
         }
     }
-
 
     private void initOrResumePlayer() {
         if (videoURL == null) return;

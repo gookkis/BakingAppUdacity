@@ -22,7 +22,16 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/act_margin"
+            android:layout_marginRight="@dimen/act_margin"
+            android:layout_toLeftOf="@+id/img_vid"
             android:layout_toRightOf="@+id/img_thumb" />
+
+        <ImageView
+            android:id="@+id/img_vid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
 
 
     </RelativeLayout>

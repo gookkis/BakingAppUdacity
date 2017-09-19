@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.gookkis.bakingapp.R;
+import com.gookkis.bakingapp.core.steps.StepsDetailPagerAdapter;
 import com.gookkis.bakingapp.model.Recipe;
 import com.gookkis.bakingapp.model.Step;
 import com.gookkis.bakingapp.utils.Const;
@@ -72,7 +73,9 @@ public class RecipeActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             viewPager = findViewById(R.id.view_pager);
             stepsDetailPagerAdapter = new StepsDetailPagerAdapter(getSupportFragmentManager(), this, steps);
+            viewPager.setOffscreenPageLimit(1);
             viewPager.setAdapter(stepsDetailPagerAdapter);
+
         }
     }
 
