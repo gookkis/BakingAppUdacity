@@ -87,5 +87,6 @@ dependencies {
     compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
 
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.pixplicity.easyprefs:library:1.9.0'
 
 }

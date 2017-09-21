@@ -42,11 +42,6 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.OnSte
     }
 
     @Override
-    public void onStepAdapterSelected(int position) {
-        stepsPosition = position;
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STEPS_POSITION, stepsPosition);
@@ -107,6 +102,11 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.OnSte
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onStepAdapterSelected(int position) {
+        this.stepsPosition = position;
     }
 
     public interface OnFragmentInteractionListener {

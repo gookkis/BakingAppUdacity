@@ -18,5 +18,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/simple_exo_player" />
+    <LinearLayout
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#c2c2c2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/iv_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="false"
+            android:src="@drawable/ic_navigate_before_blue_500_36dp"/>
+
+        <TextView
+            android:id="@+id/tv_steps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="8/10"/>
+
+        <ImageButton
+            android:id="@+id/iv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:src="@drawable/ic_navigate_next_blue_500_36dp"/>
+
+    </LinearLayout>
 </RelativeLayout>

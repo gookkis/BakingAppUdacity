@@ -2,6 +2,9 @@ package com.gookkis.bakingapp;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
+
+import com.pixplicity.easyprefs.library.Prefs;
 
 import timber.log.Timber;
 
@@ -19,6 +22,13 @@ public class BaseApps extends Application {
 
         //Timber Debug
         Timber.plant(new Timber.DebugTree());
+
+        new Prefs.Builder()
+                .setContext(this)
+                .setMode(ContextWrapper.MODE_PRIVATE)
+                .setPrefsName(getPackageName())
+                .setUseDefaultSharedPreference(true)
+                .build();
     }
 
     public static Context getAppContext() {

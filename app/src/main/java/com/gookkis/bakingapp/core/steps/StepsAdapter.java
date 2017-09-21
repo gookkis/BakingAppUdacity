@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.GsonBuilder;
 import com.gookkis.bakingapp.R;
 import com.gookkis.bakingapp.model.Step;
 import com.gookkis.bakingapp.utils.Const;
@@ -76,10 +75,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
                     EventBus.getDefault().post(new StepsPosition(position));
                 } else {
                     Intent intent = new Intent(context, StepDescItemActivity.class);
-                    String jsonSteps = new GsonBuilder().create().toJson(data);
-                    intent.putExtra(Const.STEPS, jsonSteps);
-                    intent.putExtra(Const.STEPS_POSITION, position);
+                    intent.putExtra(Const.STEP_POS, position);
                     context.startActivity(intent);
+
                 }
             }
         });

@@ -10,6 +10,8 @@ public class Const {
     public static final String SELECTED_RECIPE = "SELECTED_RECIPE";
     public static final String VIDEO_URL = "VIDEO_URL";
     public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String STEP_POS = "STEP_POS";
+    public static final String RECIPE_POS = "RECIPE_POS";
 
 
 }
