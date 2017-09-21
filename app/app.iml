@@ -123,8 +123,8 @@
     <orderEntry type="library" exported="" scope="TEST" name="exposed-instrumentation-api-publish-0.5" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-26.0.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="powermock-module-junit4-common-1.6.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="powermock-module-junit4-common-1.6.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-26.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javassist-3.18.2-GA" level="project" />
     <orderEntry type="library" exported="" name="exoplayer-ui-r2.5.1" level="project" />
@@ -138,8 +138,8 @@
     <orderEntry type="library" exported="" name="transition-26.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="jsr305-2.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="objenesis-2.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="powermock-core-1.6.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="espresso-core-2.2.2" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="powermock-core-1.6.1" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.5.1" level="project" />
     <orderEntry type="library" exported="" name="support-compat-26.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="rules-0.5" level="project" />

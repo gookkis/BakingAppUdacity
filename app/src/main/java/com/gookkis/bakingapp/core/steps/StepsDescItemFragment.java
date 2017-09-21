@@ -81,19 +81,25 @@ public class StepsDescItemFragment extends Fragment {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null && getArguments().containsKey(Const.STEP_POS)) {
+        if (savedInstanceState == null && getArguments() != null && getArguments().containsKey(Const.STEP_POS)) {
             Bundle bundle = getArguments();
             stepPos = bundle.getInt(Const.STEP_POS);
-
-            String json = Prefs.getString(Const.RECIPE, "");
-            mRecipe = new Gson().fromJson(json, Recipe.class);
-
-            videoURL = mRecipe.getSteps().get(stepPos).getVideoURL();
-            description = mRecipe.getSteps().get(stepPos).getDescription();
-
+        } else if (savedInstanceState != null) {
+            playWhenReady = savedInstanceState.getBoolean(PLAYWHENREADY);
+            currentWindow = savedInstanceState.getInt(CURRENTWINDOW);
+            playBackPosition = savedInstanceState.getLong(PLAYBACKPOSITION);
         }
+
+        stepPos = Prefs.getInt(Const.STEP_POS, 0);
+        String json = Prefs.getString(Const.RECIPE, "");
+        mRecipe = new Gson().fromJson(json, Recipe.class);
+
+        videoURL = mRecipe.getSteps().get(stepPos).getVideoURL();
+        description = mRecipe.getSteps().get(stepPos).getDescription();
+
+
     }
 
 
@@ -105,12 +111,6 @@ public class StepsDescItemFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        if (savedInstanceState != null) {
-            playWhenReady = savedInstanceState.getBoolean(PLAYWHENREADY);
-            currentWindow = savedInstanceState.getInt(CURRENTWINDOW);
-            playBackPosition = savedInstanceState.getLong(PLAYBACKPOSITION);
-        }
 
         View rootView = inflater.inflate(R.layout.fragment_steps_desc_item, container, false);
         ButterKnife.bind(this, rootView);
@@ -128,13 +128,13 @@ public class StepsDescItemFragment extends Fragment {
             hideSystemUI();
         }
 
-        if (videoURL.equals("")) {
+        //if (videoURL.equals("")) {
 
-        } else {
-            initializePlayer(Uri.parse(videoURL));
-            mPlayerView.setVisibility(View.VISIBLE);
-            hideSystemUI();
-        }
+        //} else {
+        initializePlayer(Uri.parse(videoURL));
+        //mPlayerView.setVisibility(View.VISIBLE);
+        hideSystemUI();
+        //}
 
 
         return rootView;
@@ -146,7 +146,10 @@ public class StepsDescItemFragment extends Fragment {
         outState.putBoolean(PLAYWHENREADY, playWhenReady);
         outState.putInt(CURRENTWINDOW, currentWindow);
         outState.putLong(PLAYBACKPOSITION, playBackPosition);
+        //outState.putInt(Const.STEP_POS, stepPos);
+        Prefs.putInt(Const.STEP_POS, stepPos);
     }
+
 
     @Override
     public void onPause() {
@@ -246,7 +249,7 @@ public class StepsDescItemFragment extends Fragment {
                 }
                 break;
             case R.id.iv_next:
-                if (stepPos == mRecipe.getSteps().size()) {
+                if (stepPos == mRecipe.getSteps().size() - 1) {
                     ivNext.setClickable(false);
                 } else {
                     ivPrev.setClickable(true);
@@ -258,6 +261,7 @@ public class StepsDescItemFragment extends Fragment {
     }
 
     private void changeSteps() {
+        Prefs.putInt(Const.STEP_POS, stepPos);
         releasePlayer();
         recreateFragment();
     }
