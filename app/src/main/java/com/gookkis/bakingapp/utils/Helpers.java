@@ -8,6 +8,8 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.pixplicity.easyprefs.library.Prefs;
+
 import java.util.HashMap;
 
 /**
@@ -76,5 +78,13 @@ public class Helpers {
             return false;
         }
 
+    }
+
+    public static void updatePosition(int pos) {
+        Prefs.putInt(Const.STEP_POS, pos);
+    }
+
+    public static int getPosition() {
+        return Prefs.getInt(Const.STEP_POS, 0);
     }
 }

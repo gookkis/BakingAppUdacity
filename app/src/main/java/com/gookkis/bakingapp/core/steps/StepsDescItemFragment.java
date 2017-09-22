@@ -3,7 +3,6 @@ package com.gookkis.bakingapp.core.steps;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -34,6 +33,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 
 /**
@@ -79,27 +79,37 @@ public class StepsDescItemFragment extends Fragment {
         return f;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        stepPos = Prefs.getInt(Const.STEP_POS, 0);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null && getArguments() != null && getArguments().containsKey(Const.STEP_POS)) {
-            Bundle bundle = getArguments();
-            stepPos = bundle.getInt(Const.STEP_POS);
-        } else if (savedInstanceState != null) {
+
+        if (savedInstanceState != null) {
             playWhenReady = savedInstanceState.getBoolean(PLAYWHENREADY);
             currentWindow = savedInstanceState.getInt(CURRENTWINDOW);
             playBackPosition = savedInstanceState.getLong(PLAYBACKPOSITION);
+            //stepPos = Helpers.getPosition();
+            stepPos = savedInstanceState.getInt(Const.STEP_POS);
+            Timber.d("step pos saved instance" + stepPos);
+        } else {
+            stepPos = Helpers.getPosition();
         }
 
-        stepPos = Prefs.getInt(Const.STEP_POS, 0);
+
         String json = Prefs.getString(Const.RECIPE, "");
         mRecipe = new Gson().fromJson(json, Recipe.class);
 
         videoURL = mRecipe.getSteps().get(stepPos).getVideoURL();
         description = mRecipe.getSteps().get(stepPos).getDescription();
 
+        Timber.d("Step Pos" + stepPos);
 
+        setRetainInstance(true);
     }
 
 
@@ -108,9 +118,9 @@ public class StepsDescItemFragment extends Fragment {
         exoPlayer.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_steps_desc_item, container, false);
         ButterKnife.bind(this, rootView);
@@ -123,6 +133,7 @@ public class StepsDescItemFragment extends Fragment {
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE && !Helpers.isMultiPane(getActivity()) && !videoURL.equals("")) {
+            initializePlayer(Uri.parse(videoURL));
             expandVideoView(mPlayerView);
             viewBottom.setVisibility(View.INVISIBLE);
             hideSystemUI();
@@ -142,18 +153,35 @@ public class StepsDescItemFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(Const.STEP_POS, stepPos);
+        Helpers.updatePosition(stepPos);
         super.onSaveInstanceState(outState);
         outState.putBoolean(PLAYWHENREADY, playWhenReady);
         outState.putInt(CURRENTWINDOW, currentWindow);
         outState.putLong(PLAYBACKPOSITION, playBackPosition);
-        //outState.putInt(Const.STEP_POS, stepPos);
-        Prefs.putInt(Const.STEP_POS, stepPos);
-    }
 
+
+    }
 
     @Override
     public void onPause() {
+        Helpers.updatePosition(stepPos);
         super.onPause();
+        releasePlayer();
+
+    }
+
+    @Override
+    public void onStop() {
+        Helpers.updatePosition(stepPos);
+        super.onStop();
+        releasePlayer();
+    }
+
+    @Override
+    public void onDestroy() {
+        Helpers.updatePosition(stepPos);
+        super.onDestroy();
         releasePlayer();
     }
 
@@ -261,12 +289,13 @@ public class StepsDescItemFragment extends Fragment {
     }
 
     private void changeSteps() {
-        Prefs.putInt(Const.STEP_POS, stepPos);
+        Helpers.updatePosition(stepPos);
         releasePlayer();
         recreateFragment();
     }
 
     private void recreateFragment() {
+        Timber.d("Step recreate" + Prefs.getInt(Const.STEP_POS, 0));
         StepsDescItemFragment stepsDescItemFragment = StepsDescItemFragment.newInstance(stepPos);
         getFragmentManager().beginTransaction().replace(R.id.frag_steps_detail, stepsDescItemFragment).commit();
     }

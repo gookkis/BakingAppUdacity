@@ -90,7 +90,7 @@ public class RecipeActivity extends AppCompatActivity
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(StepsPosition selectPos) {
-        Prefs.putInt(Const.STEP_POS, selectPos.getPos());
+        Helpers.updatePosition(selectPos.getPos());
         StepsDescItemFragment stepsDescItemFragment = StepsDescItemFragment.newInstance(selectPos.getPos());
         getSupportFragmentManager().beginTransaction().replace(R.id.frag_steps_detail, stepsDescItemFragment).commit();
     }

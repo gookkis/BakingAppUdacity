@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gookkis.bakingapp.R;
 import com.gookkis.bakingapp.model.Step;
 import com.gookkis.bakingapp.utils.Const;
+import com.gookkis.bakingapp.utils.Helpers;
 import com.gookkis.bakingapp.utils.StepsPosition;
 import com.squareup.picasso.Picasso;
 
@@ -71,6 +72,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 onStepAdapterListener.onStepAdapterSelected(position);
+                Helpers.updatePosition(position);
                 if (isMultiPane) {
                     EventBus.getDefault().post(new StepsPosition(position));
                 } else {
@@ -82,7 +84,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
             }
         });
 
-        if(!step.getVideoURL().isEmpty()){
+        if (!step.getVideoURL().isEmpty()) {
             holder.imgVid.setImageResource(R.drawable.ic_slow_motion_video_blue_500_48dp);
         }
     }
