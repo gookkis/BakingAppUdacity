@@ -12,6 +12,6 @@ public class Const {
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String STEP_POS = "STEP_POS";
     public static final String RECIPE_POS = "RECIPE_POS";
-
+    public static final String FRAGMENT_KEY = "FRAGMENT_KEY";
 
 }

@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.LayoutInflater;
@@ -28,12 +29,14 @@ import com.gookkis.bakingapp.R;
 import com.gookkis.bakingapp.model.Recipe;
 import com.gookkis.bakingapp.utils.Const;
 import com.gookkis.bakingapp.utils.Helpers;
+import com.gookkis.bakingapp.utils.StepsPosition;
 import com.pixplicity.easyprefs.library.Prefs;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 
 /**
@@ -95,7 +98,6 @@ public class StepsDescItemFragment extends Fragment {
             playBackPosition = savedInstanceState.getLong(PLAYBACKPOSITION);
             //stepPos = Helpers.getPosition();
             stepPos = savedInstanceState.getInt(Const.STEP_POS);
-            Timber.d("step pos saved instance" + stepPos);
         } else {
             stepPos = Helpers.getPosition();
         }
@@ -106,8 +108,6 @@ public class StepsDescItemFragment extends Fragment {
 
         videoURL = mRecipe.getSteps().get(stepPos).getVideoURL();
         description = mRecipe.getSteps().get(stepPos).getDescription();
-
-        Timber.d("Step Pos" + stepPos);
 
         setRetainInstance(true);
     }
@@ -295,9 +295,15 @@ public class StepsDescItemFragment extends Fragment {
     }
 
     private void recreateFragment() {
-        Timber.d("Step recreate" + Prefs.getInt(Const.STEP_POS, 0));
-        StepsDescItemFragment stepsDescItemFragment = StepsDescItemFragment.newInstance(stepPos);
-        getFragmentManager().beginTransaction().replace(R.id.frag_steps_detail, stepsDescItemFragment).commit();
+        if (Helpers.isMultiPane(getActivity())) {
+            StepsDescItemFragment stepsDescItemFragment = StepsDescItemFragment.newInstance(stepPos);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.frag_steps_detail, stepsDescItemFragment);
+            transaction.commit();
+        } else {
+            EventBus.getDefault().post(new StepsPosition(stepPos));
+        }
+
     }
 
 }

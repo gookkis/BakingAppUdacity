@@ -36,6 +36,8 @@ public class RecipeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        setupAppBar();
         presenter = new RecipePresenter(this);
         presenter.parsingRecipe(this.getIntent());
 
@@ -47,6 +49,10 @@ public class RecipeActivity extends AppCompatActivity
             isMultiPane = false;
             init(savedInstanceState);
         }
+    }
+
+    private void setupAppBar() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void init(Bundle savedInstanceState) {
